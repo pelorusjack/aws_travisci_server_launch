@@ -1,0 +1,16 @@
+{
+  "name": "aws_travisci_server_launch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.105.0",
+    "dotenv": "^4.0.0",
+    "travisci-webhook-handler": "^2.0.0"
+  }
+}
