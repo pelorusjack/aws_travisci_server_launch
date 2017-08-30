@@ -9,6 +9,11 @@
 ```javascript
 git clone https://github.com/pelorusjack/aws_travisci_server_launch
 cd aws_travisci_server_launch
+```
+
+copy the .env.sample to .env and update the values.
+
+```
 npm i -g pm2
 pm2 start index.js
 pm2 startup systemd
