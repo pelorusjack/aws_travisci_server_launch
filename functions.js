@@ -1,13 +1,12 @@
 'use strict';
 require('dotenv').config();
 const got = require('got');
-
-process.env.AWS_ACCESSKEYID
+var buildServer = process.env.BUILDSERVER;
 
 async function startBuildWithRetry (result) {
     try {
         var headers = {'accept': 'application/json','content-type': 'application/json'}
-        got(process.env.BUILDSERVER +'/build', {retries: 10, json: true, method: 'POST', body: JSON.stringify(result), headers}).then(console.log)
+        return await got(buildServer +'/build', {retries: 10, json: true, method: 'POST', body: JSON.stringify(result), headers});
     } catch (e) {
         console.error (e);
     }

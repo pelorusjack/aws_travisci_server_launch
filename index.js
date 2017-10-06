@@ -1,13 +1,13 @@
 'use strict';
 require('dotenv').config()
-require('./functions');
+var functions = require('./functions');
 var createHandler = require('travisci-webhook-handler');
 var AWS = require('aws-sdk');
 
 AWS.config.update({accessKeyId: process.env.AWS_ACCESSKEYID, secretAccessKey: process.env.AWS_SECRETACCESSKEY});
 AWS.config.update({region: 'us-east-1'});
 var ec2 = new AWS.EC2();
-var dryRun = true;
+var dryRun = false;
 var instanceId = process.env.AWS_INSTANCEID;
 var originalState;
 
@@ -31,7 +31,7 @@ handler.on('success', async function (event) {
   event.payload.number,
   event.payload.repository.name,
   event.payload.branch);
-  console.log(functions.getstate);
+//  console.log(functions.getstate);
 
   ec2.describeInstances(params, function(err, data) {
     if (err) console.log(err, err.stack); // an error occurred
@@ -46,13 +46,10 @@ handler.on('success', async function (event) {
         if (err) console.log(err, err.stack); // an error occurred
         else  {   
           console.log(data); // successful response
-          var result = await functions.startBuildWithRetry(orignalState)
+          var result = await functions.startBuildWithRetry(originalState)
           console.log(result); // successful response
         }
       });
     }  
   });
 });
-
-
-
