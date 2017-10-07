@@ -12,6 +12,7 @@
     "aws-sdk": "^2.105.0",
     "dotenv": "^4.0.0",
     "got": "^7.1.0",
+    "node-fetch": "^1.7.3",
     "travisci-webhook-handler": "^2.0.0"
   }
 }

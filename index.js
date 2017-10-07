@@ -50,10 +50,10 @@ handler.on('success', async function (event) {
           console.log(data); // successful response
           console.log("Sending build message to build server: "+ buildServer + " state: " + originalState);
           var headers = {'accept': 'application/json','content-type': 'application/json'}
-          got(buildServer +'/build/', {retries: 10, json: true, method: 'POST', body: originalState, headers}).then(response => {
-		console.log(response.body);
-	});
-        }
+         got('http://' + buildServer +':8080/build/', {retries: 10, json: true, method: 'POST', body: originalState, headers}).then(response => {
+                console.log(response.body);
+        });
+      }
       });
     }  
   });
