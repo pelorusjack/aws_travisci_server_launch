@@ -1,8 +1,10 @@
 'use strict';
 require('dotenv').config()
-var functions = require('./functions');
+const got = require('got');
+//var functions = require('./functions');
 var createHandler = require('travisci-webhook-handler');
 var AWS = require('aws-sdk');
+var buildServer = process.env.BUILDSERVER;
 
 AWS.config.update({accessKeyId: process.env.AWS_ACCESSKEYID, secretAccessKey: process.env.AWS_SECRETACCESSKEY});
 AWS.config.update({region: 'us-east-1'});
@@ -46,8 +48,11 @@ handler.on('success', async function (event) {
         if (err) console.log(err, err.stack); // an error occurred
         else  {   
           console.log(data); // successful response
-          var result = await functions.startBuildWithRetry(originalState)
-          console.log(result); // successful response
+          console.log("Sending build message to build server: "+ buildServer + " state: " + originalState);
+          var headers = {'accept': 'application/json','content-type': 'application/json'}
+          got(buildServer +'/build/', {retries: 10, json: true, method: 'POST', body: originalState, headers}).then(response => {
+		console.log(response.body);
+	});
         }
       });
     }  
